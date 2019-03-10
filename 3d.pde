@@ -1,6 +1,6 @@
 float lambda = 22.5;
 HashMap rules = new HashMap();
-rules.put("A", "![&FLA][^FLA]");
+rules.put("A", "![&F[!!FA]LA][^FLA][\\++FLA]");
 
 class Cyl {
   float radius, height;
@@ -15,6 +15,7 @@ class Cyl {
     float angle = 360 / sides;
 
     // draw the bottom face
+    noStroke();
     beginShape();
     for (int i = 0; i < sides; i++) {
       float x = this.radius * sin(radians(i * angle));
@@ -33,7 +34,6 @@ class Cyl {
     endShape(CLOSE);
 
     // Draw the outside
-    // noStroke();
     beginShape(TRIANGLE_STRIP);
     for (int i = 0; i <= sides; i++) {
       float x = this.radius * sin(radians(i * angle));
@@ -80,7 +80,7 @@ class Tree {
         (new Cyl(10, 200)).draw();
         translate(0, -200, 0);
       } else if (grammar.charAt(i).equals("L")) {
-        sphere(20);
+        // sphere(20);
       } else if (grammar.charAt(i).equals("!")) {
         // decrement radius
         scale(0.8, 0.8, 0.8);
@@ -113,13 +113,12 @@ String iterateGrammar(String start, int N) {
 
 void setup() {
   size(window.innerWidth, window.innerHeight, OPENGL);
-  background(#ffffff);
-  lights();
-  String grammar = iterateGrammar("A", 7);
-  println(grammar);
+  background(#829cbc);
+  directionalLight(255, 255, 255, 1, 1, 1);
+  // ambientLight(102, 102, 102);
+  String grammar = iterateGrammar("A", 6);
   translate(width / 2, height * 9 / 10 , 0);
   rotateY(radians(90));
-  // scale(2.5);
   (new Tree(grammar)).draw();
 }
 
