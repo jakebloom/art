@@ -13,7 +13,7 @@ class Cyl {
 
   void draw() {
     float angle = 360 / sides;
-
+    color(#b5aa9d)
     // draw the bottom face
     noStroke();
     beginShape();
@@ -113,9 +113,8 @@ String iterateGrammar(String start, int N) {
 
 void setup() {
   size(window.innerWidth, window.innerHeight, OPENGL);
+  lights();
   background(#829cbc);
-  directionalLight(255, 255, 255, 1, 1, 1);
-  // ambientLight(102, 102, 102);
   String grammar = iterateGrammar("A", 6);
   translate(width / 2, height * 9 / 10 , 0);
   rotateY(radians(90));
