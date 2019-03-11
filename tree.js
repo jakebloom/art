@@ -30,7 +30,7 @@ function Cyl(radius, height) {
   }
 
   noStroke();
-  ambientMaterial(250);
+  ambientMaterial('#b5aa9d');
   drawCircle(radius, 0);
   drawCircle(radius, height);
   drawOutside(radius, height);
@@ -95,13 +95,17 @@ function Tree(grammar) {
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight, WEBGL);
-  background('#000000');//background("#829cbc");
-  directionalLight(250, 250, 250, 1, 1, -1);
+  background("#829cbc");
+  directionalLight(250, 250, 250, 0.1, 0.1, 0);
+  ambientLight(100);
   ambientMaterial(250);
-  const grammar = iterateGrammar("A", 4);
-  translate(0, (height / 2) * 9 / 10, 0);
-  sphere(50);
+  const grammar = iterateGrammar("A", 5);
+  translate(0, (height / 2) * 3 / 4, 0);
   rotateY(radians(90));
+  push();
+  translate(0, height, 0);
+  sphere(20);
+  pop();
   Tree(grammar);
 }
 
