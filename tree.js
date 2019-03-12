@@ -1,5 +1,6 @@
 const rules = {
-  "A": "![&F[!!FA]LA][^FLA][\\++FLA]",
+  "A": "![&F[!!FLA]A][^FLA][\\++FLA]",
+  "L": "[//L]",
 };
 const lambda = 22.5;
 
@@ -79,7 +80,23 @@ function Tree(grammar) {
       Cyl(10, 200);
       translate(0, -200, 0);
     } else if (grammar[i] === "L") {
-      // sphere(20);
+      ambientMaterial('#BBDB9B');
+      push();
+      translate(0, -50, 0);
+      ellipsoid(5, 50, 10);
+      pop();
+
+      push();
+      rotateX(radians(lambda));
+      translate(0, -50, 0);
+      ellipsoid(5, 50, 10);
+      pop();
+
+      push();
+      rotateZ(-1 * radians(lambda));
+      translate(0, -50, 0);
+      ellipsoid(5, 50, 15);
+      pop();
     } else if (grammar[i] === "!") {
       // decrement radius
       scale(0.8, 0.8, 0.8);
@@ -96,7 +113,7 @@ function Tree(grammar) {
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight, WEBGL);
   background("#829cbc");
-  directionalLight(250, 250, 250, 0.1, 0.1, 0);
+  directionalLight(250, 250, 250, 1, 1, -1);
   ambientLight(100);
   ambientMaterial(250);
   const grammar = iterateGrammar("A", 5);
