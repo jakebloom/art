@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>Yellamundie</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="index.css"/>
+  </head>
+  <body>
+    <script async onload="ready()" type="text/javascript" src="https://docs.opencv.org/master/opencv.js"></script>
+    <script type="text/javascript" src="https://docs.opencv.org/master/utils.js"></script>
+
+    <div class="container">
+      <h1>Yellamundie ~ Story Teller</h1>
+      
+      <p>In Koori culture, storytelling was partly done through the use of artwork</p>
+      <p>So upload a photo, and tell your story.</p>
+      
+      <div style="display: none;" id="inputContainer">
+          <input id="fileInput" type="file" name="file" accept="image/*" />
+          <button onclick="exec()">Yanma</button>
+        </div>
+        
+        <hr />
+        <canvas id="canvasOutput"></canvas>
+        <canvas id="canvasInput" style="display:none;"></canvas>
+
+    </div>
+    <script>
+
+let utils = new Utils('errorMessage');
+utils.addFileInputHandler('fileInput', 'canvasInput');
+
+function ready() {
+  cv['onRuntimeInitialized'] = () => {
+    document.getElementById('inputContainer').style = '';
+  }
+}
+
+function exec() {
+  let src = cv.imread('canvasInput');
+  let dst = new cv.Mat();
+  cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
+
+  cv.Canny(src, dst, 50, 100, 3, false);
+  cv.imshow('canvasOutput', dst);
+  src.delete();
+  dst.delete();
+}
+    </script>
+  </body>
+</html>
