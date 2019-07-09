@@ -26,6 +26,17 @@
 
     </div>
     <script>
+const START_COLOR = '6E0E0A';
+const END_COLOR = 'FBBA72';
+
+const START_RED = parseInt(START_COLOR.substr(0, 2), 16);
+const START_GREEN = parseInt(START_COLOR.substr(2, 2), 16);
+const START_BLUE = parseInt(START_COLOR.substr(4, 2), 16);
+
+const END_RED = parseInt(END_COLOR.substr(0, 2), 16);
+const END_GREEN = parseInt(END_COLOR.substr(2, 2), 16);
+const END_BLUE = parseInt(END_COLOR.substr(4, 2), 16);
+
 
 let utils = new Utils('errorMessage');
 utils.addFileInputHandler('fileInput', 'canvasInput');
@@ -40,11 +51,33 @@ function exec() {
   let src = cv.imread('canvasInput');
   let dst = new cv.Mat();
   cv.cvtColor(src, src, cv.COLOR_RGB2GRAY, 0);
-
   cv.Canny(src, dst, 50, 100, 3, false);
+  cv.cvtColor(dst, dst, cv.COLOR_GRAY2RGB);
+  debugger;
+  for (let row = 0; row < dst.rows; row++) {
+    for (let col = 0; col < dst.cols; col++) {
+      let pixel = dst.ucharPtr(row, col);
+
+      if (pixel[0] + pixel[1] + pixel[2] !== 0) {
+        const [R, G, B] = getColour(row, dst.rows);
+        pixel[0] = R;
+        pixel[1] = G;
+        pixel[2] = B;
+      }
+    }
+  }
+
   cv.imshow('canvasOutput', dst);
   src.delete();
   dst.delete();
+}
+
+function getColour(x, totalRows) {
+  const percent = x / totalRows;
+  const R = START_RED + percent * (END_RED - START_RED);
+  const G = START_GREEN + percent * (END_GREEN - START_GREEN);
+  const B = START_BLUE + percent * (END_BLUE - START_BLUE);
+  return [R, G, B];
 }
     </script>
   </body>
